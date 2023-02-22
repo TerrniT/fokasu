@@ -7,12 +7,21 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "test-with-vite",
+    "productName": "pomodoro by t4rrnit",
     "version": "0.0.0"
   },
   "tauri": {
+    "systemTray": {
+      "iconPath": "icons/32x32.png",
+      "iconAsTemplate": true
+    },
     "allowlist": {
-      "all": false,
+      "notification": {
+        "all": true
+      },
+      "dialog": {
+        "all": true
+      },
       "shell": {
         "all": false,
         "open": true
@@ -62,8 +71,8 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "test-with-vite",
-        "width": 800
+        "title": "pomodoro by t4rrnit",
+        "width": 300
       }
     ]
   }
