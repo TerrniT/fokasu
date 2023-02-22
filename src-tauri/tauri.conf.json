@@ -7,8 +7,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "pomodoro by t4rrnit",
-    "version": "0.0.0"
+    "productName": "pomodoro app by t4rrnit",
+    "version": "1.1.0"
   },
   "tauri": {
     "systemTray": {
@@ -40,7 +40,7 @@
         "icons/128x128.png",
         "icons/128x128@2x.png",
         "icons/icon.icns",
-        "icons/icon.ico"
+        "icons/fokusa.ico"
       ],
       "identifier": "com.tauri.dev",
       "longDescription": "",
@@ -69,9 +69,9 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
-        "resizable": true,
-        "title": "pomodoro by t4rrnit",
+        "height": 300,
+        "resizable": false,
+        "title": "Fokasu",
         "width": 300
       }
     ]
