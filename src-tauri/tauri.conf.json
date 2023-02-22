@@ -42,7 +42,7 @@
         "icons/icon.icns",
         "icons/fokusa.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "dev.terrnit.fokasu",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
