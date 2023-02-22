@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "pomodoro app by t4rrnit",
+    "productName": "fokasu",
     "version": "1.1.0"
   },
   "tauri": {
