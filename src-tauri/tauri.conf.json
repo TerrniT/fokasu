@@ -1,8 +1,8 @@
 {
   "build": {
-    "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build",
-    "devPath": "http://localhost:1420",
+    "devPath": "http://localhost:3000",
+	"beforeBuildCommand": "npm run next-build",
+    "beforeDevCommand": "npm run next-start",
     "distDir": "../dist",
     "withGlobalTauri": false
   },
@@ -72,7 +72,7 @@
         "height": 300,
         "resizable": false,
         "title": "Fokasu",
-        "width": 300
+        "width": 340
       }
     ]
   }
