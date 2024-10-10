@@ -1,5 +1,3 @@
----
-
 # Fokasu (焦点, 中心, 病巣, Focus)
 
 A Pomodoro app designed to help you focus and boost productivity through the Pomodoro Technique. Fokasu offers an intuitive interface and customizable settings to help you manage your work and break periods effectively.
