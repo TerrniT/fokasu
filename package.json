@@ -7,7 +7,8 @@
     "next-start": "cross-env BROWSER=none next dev",
     "next-build": "next build && next export -o dist",
     "dev": "tauri dev",
-    "build": "tauri build"
+    "build": "tauri build",
+	"tauri": "tauri"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.2",
