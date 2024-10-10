@@ -38,7 +38,7 @@ To run the Fokasu app locally, follow these steps:
     ```
 
 2. **Install Dependencies**:
-    Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed. Then run:
+    Make sure you have [Node.js](https://nodejs.org/), [npm](https://www.npmjs.com/) and [rustup](https://tauri.app/start/prerequisites/#rust) installed. Then run:
     ```bash
     npm install
     ```
