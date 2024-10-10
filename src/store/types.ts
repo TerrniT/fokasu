@@ -14,7 +14,11 @@ export interface PomodoroMethods {
   stopTimer: () => void;
   resetTimer: () => Promise<void>;
   tick: () => void;
-  
+
+  setWorkDuration: (duration: number) => void; // Action to set work duration
+  setBreakDuration: (duration: number) => void; // Action to set break duration
+  setCycles: (cycles: number) => void; // Action to set number of cycles
+
   completePomodoro?: () => void;
   completeSession?: (name: string) => void; // Accept name for session completion
   getMonthlyData?: (year?: number, month?: number) => PomodoroEntityDay[];
@@ -36,6 +40,7 @@ export interface PomodoroState {
   isBreak: boolean;
   currentStreak: number;
   bestStreak: number;
+  percentageLeft: number;
 
   completedSessions: PomodoroEntityDay[];
   completedPomodoroCount: number; // Total completed Pomodoros

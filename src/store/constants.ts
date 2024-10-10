@@ -1,6 +1,6 @@
 export const DEFAULT_POMODORO_DURATION = {
-  workDuration: 0.5 * 10, // 15 sec
-  breakDuration: 0.5 * 10, // 15 sec
+  workDuration: 25 * 60, // 25 min
+  breakDuration: 5 * 60, // 5 min
   cycles: 4,
 };
 

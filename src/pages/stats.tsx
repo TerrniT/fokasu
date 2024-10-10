@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { PageLayout } from "../components/page-layout";
-import { Toolbar } from "../components/toolbar";
+import { PageLayout } from "@/components/page-layout";
+import { Toolbar } from "@/components/toolbar";
 
 import { RiTimer2Line as TimerIcon } from "react-icons/ri";
 
-import { usePomodoroStore } from "../store";
+import { usePomodoroStore } from "@/store";
 
-import { StatItem } from "../components/stat-item";
-import { StatStreakGrid } from "../components/stat-streak-grid";
+import { StatItem } from "@/components/stat-item";
+import { StatStreakGrid } from "@/components/stat-streak-grid";
 
 export default function StatsPage() {
   const {

@@ -946,7 +946,7 @@ checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
 
 [[package]]
 name = "fokasu-backend"
-version = "0.1.2"
+version = "1.1.2"
 dependencies = [
  "serde",
  "serde_json",

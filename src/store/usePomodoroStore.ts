@@ -3,11 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 import { ask } from "@tauri-apps/api/dialog";
 
-import {
-  PomodoroEntitySession,
-  PomodoroMethods,
-  PomodoroState,
-} from "./types";
+import { PomodoroEntitySession, PomodoroMethods, PomodoroState } from "./types";
 
 import { DEFAULT_POMODORO_DURATION } from "./constants";
 
@@ -26,6 +22,7 @@ const usePomodoroStore = create<PomodoroStore>()(
       secondsLeft: DEFAULT_POMODORO_DURATION.workDuration,
       isTimerStart: false,
       isBreak: false,
+      percentageLeft: 100,
 
       // Pomodoro
       currentStreak: 0,
@@ -37,20 +34,49 @@ const usePomodoroStore = create<PomodoroStore>()(
       bestSessionStreak: 0, // Best completed session streak
 
       // Methods
-      startTimer: () => set({ isTimerStart: true }),
+      startTimer: () => {
+        const state = get();
+        if (!state.isTimerStart) {
+          const totalDuration = state.isBreak
+            ? state.breakDuration
+            : state.workDuration;
+          // This only sets initial values if the timer hasn't been started
+          if (state.secondsLeft === 0) {
+            set({ secondsLeft: totalDuration, percentageLeft: 100 });
+          }
+          set({ isTimerStart: true }); // Set timer as running
+        }
+      },
       stopTimer: () => set({ isTimerStart: false }),
+
+      // Actions to set durations and cycles
+      setWorkDuration: (duration: number) =>
+        set(() => ({
+          workDuration: duration,
+          secondsLeft: duration,
+          cycleCount: 0,
+          isBreak: false,
+          isTimerStart: false,
+        })),
+      setBreakDuration: (duration: number) =>
+        set(() => ({ breakDuration: duration })),
+      setCycles: (cycles: number) => set(() => ({ cycles })),
 
       resetTimer: async () => {
         const shouldReset = await ask("Do you want to reset the timer?", {
           title: "Fokasu",
           type: "warning",
         });
+
         if (shouldReset) {
-          set({
-            secondsLeft: DEFAULT_POMODORO_DURATION.workDuration,
-            cycleCount: 0,
-            isBreak: false,
-            isTimerStart: false,
+          set((state) => {
+            return {
+              secondsLeft: state.workDuration,
+			  percentageLeft: 100,
+              cycleCount: 0,
+              isBreak: false,
+              isTimerStart: false,
+            };
           });
         }
       },
@@ -97,8 +123,15 @@ const usePomodoroStore = create<PomodoroStore>()(
               return { isBreak: true, secondsLeft: breakDuration };
             }
           }
+          const totalDuration = state.isBreak
+            ? state.breakDuration
+            : state.workDuration;
+          const newSecondsLeft = secondsLeft - 1;
 
-          return { secondsLeft: secondsLeft - 1 };
+          return {
+            secondsLeft: newSecondsLeft,
+            percentageLeft: 100 - (newSecondsLeft / totalDuration) * 100,
+          };
         }),
       completePomodoro: () => {
         set((state) => ({
@@ -119,7 +152,6 @@ const usePomodoroStore = create<PomodoroStore>()(
           const existingDayEntry = state.completedSessions.find(
             (day) => day.value === todayDate
           );
-          console.log(existingDayEntry);
 
           if (existingDayEntry) {
             // If the entry exists, append the new session
@@ -134,8 +166,8 @@ const usePomodoroStore = create<PomodoroStore>()(
 
           return {
             completedSessions: [...state.completedSessions],
-			currentStreak: state.currentStreak + 1, // Increment current Pomodoro streak
-			bestStreak: Math.max(state.currentStreak + 1, state.bestStreak), // Update best Pomodoro streak
+            currentStreak: state.currentStreak + 1, // Increment current Pomodoro streak
+            bestStreak: Math.max(state.currentStreak + 1, state.bestStreak), // Update best Pomodoro streak
           };
         });
       },
@@ -173,10 +205,10 @@ const usePomodoroStore = create<PomodoroStore>()(
       getAllCompletedPomodorosCount: () => {
         const sessions = get().getMonthlyData();
 
-		return sessions
-		  .map((day) => day.sessions)
-		  .flat()
-		  .reduce((acc, session) => acc + session.pomodoros_count, 0);
+        return sessions
+          .map((day) => day.sessions)
+          .flat()
+          .reduce((acc, session) => acc + session.pomodoros_count, 0);
       },
     }),
     {

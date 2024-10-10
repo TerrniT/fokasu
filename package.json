@@ -2,7 +2,7 @@
   "name": "fokasu",
   "author": "TerrniT",
   "private": true,
-  "version": "0.1.1",
+  "version": "1.1.2",
   "scripts": {
     "next-start": "cross-env BROWSER=none next dev",
     "next-build": "next build && next export -o dist",

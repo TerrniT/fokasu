@@ -26,16 +26,20 @@ export const generateCalendar = (
   return calendar;
 };
 
+export const fillCalendarWithSessions = (
+  calendar: PomodoroEntityDay[],
+  completedSessions: PomodoroEntityDay[]
+) => {
+  completedSessions.forEach((entry) => {
+    const sessionDate = entry.value;
+    const calendarEntry = calendar.find(
+      (calEntry) => calEntry.value === sessionDate
+    );
 
-export const fillCalendarWithSessions = (calendar: PomodoroEntityDay[], completedSessions: PomodoroEntityDay[]) => {
-    completedSessions.forEach(entry => {
-        const sessionDate = entry.value;
-        const calendarEntry = calendar.find(calEntry => calEntry.value === sessionDate);
-        
-        if (calendarEntry) {
-            calendarEntry.sessions = entry.sessions; // Fill with actual sessions
-        }
-    });
+    if (calendarEntry) {
+      calendarEntry.sessions = entry.sessions; // Fill with actual sessions
+    }
+  });
 
-    return calendar;
+  return calendar;
 };
