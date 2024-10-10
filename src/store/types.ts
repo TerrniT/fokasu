@@ -17,6 +17,7 @@ export interface PomodoroMethods {
   
   completePomodoro?: () => void;
   completeSession?: (name: string) => void; // Accept name for session completion
+  getMonthlyData?: (year?: number, month?: number) => PomodoroEntityDay[];
 //   getAllSessions?: () => number[]; // All completed sessions
 //   getTodaySessions?: () => number[]; // Today's completed sessions
 

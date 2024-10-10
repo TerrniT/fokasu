@@ -5,14 +5,15 @@ import { Toolbar } from "../components/toolbar";
 import { RiTimer2Line as TimerIcon } from "react-icons/ri";
 
 import { usePomodoroStore } from "../store";
+
 import { StatItem } from "../components/stat-item";
-import { cn } from "../utils/cn";
 import { StatStreakGrid } from "../components/stat-streak-grid";
 
 export default function StatsPage() {
   const {
     // completedSessionTimestamps,
-    completedSessions,
+    // completedSessions,
+	getMonthlyData
 
     // getAllSessionsCount,
     // getTodaySessionsCount,
@@ -26,11 +27,8 @@ export default function StatsPage() {
     // getAllDaysCount
   } = usePomodoroStore();
 
-  function resolveColorOpacity(value: number) {
-    return `bg-orange-600/${value * 10}`;
-  }
-
-  console.log(completedSessions, "completedSessions");
+  const sessions =  getMonthlyData(2024, 9)
+  console.log(sessions, "completedSessions");
   return (
     <PageLayout>
       <Toolbar position="top">
@@ -96,7 +94,7 @@ export default function StatsPage() {
             variant="secondary"
             className="col-span-4"
           /> */}
-          <StatStreakGrid streakArray={completedSessions} />
+          <StatStreakGrid streakArray={sessions} />
         </div>
       </div>
     </PageLayout>

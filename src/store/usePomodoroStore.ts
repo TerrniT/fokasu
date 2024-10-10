@@ -3,8 +3,15 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 import { ask } from "@tauri-apps/api/dialog";
 
-import { PomodoroEntitySession, PomodoroMethods, PomodoroState } from "./types";
+import {
+  PomodoroEntityDay,
+  PomodoroEntitySession,
+  PomodoroMethods,
+  PomodoroState,
+} from "./types";
 import { DEFAULT_POMODORO_DURATION, mockSessions } from "./constants";
+
+import { fillCalendarWithSessions, generateCalendar } from "@/utils";
 
 interface PomodoroStore extends PomodoroState, PomodoroMethods {}
 
@@ -72,7 +79,6 @@ const usePomodoroStore = create<PomodoroStore>()(
                   isBreak: false,
                 };
               } else {
-                console.log("SESSION IS COMPLETE");
                 completePomodoro(); // Log the completion
                 completeSession(`Session ${completedSessions.length + 1}`); // Log session completion
 
@@ -132,6 +138,20 @@ const usePomodoroStore = create<PomodoroStore>()(
             completedSessions: [...state.completedSessions],
           };
         });
+      },
+
+      // Get monthly data with sessions filled
+      getMonthlyData: (yearValue?: number, monthValue?: number) => {
+		const year = yearValue || new Date().getFullYear();
+		const month = monthValue || new Date().getMonth();
+
+		const calendar = generateCalendar(year, month);
+
+        const filledCalendar = fillCalendarWithSessions(
+          calendar,
+          get().completedSessions
+        );
+        return filledCalendar; // This will include empty days filling with actual sessions
       },
 
       //   getAllCompletedPomodorosCount: () => {

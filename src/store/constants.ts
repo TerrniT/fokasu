@@ -79,4 +79,9 @@ export const mockSessions = [
       { name: "Session 9", timestamp: "1728353076633", pomodoros_count: 4 },
     ],
   },
+  {
+	value: "2024-10-11",
+	sessions: [
+	],
+  }
 ];
