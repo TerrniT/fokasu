@@ -77,5 +77,5 @@ If you'd like to contribute to Fokasu, please follow these steps:
 - Inspired by the Pomodoro Technique, which helps improve focus and productivity.
 
 ## Stack
--  Typescript, React (Next 13), Zustand, Tauri
+-  Typescript, React (Next 13), Zustand, Tauri and ShadcnUI
 ---
