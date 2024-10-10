@@ -3,7 +3,8 @@ import { BsLightningChargeFill as LightingIcon } from "react-icons/bs";
 import { BiCoffee as CoffeeIcon } from "react-icons/bi";
 
 import { Circle } from "../circle";
-import { cn } from "../../utils/cn";
+
+import { cn } from "@/utils";
 
 interface Props {
   time: number;

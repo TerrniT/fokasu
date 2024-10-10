@@ -1,4 +1,4 @@
-import { cn } from "../../utils/cn";
+import { cn } from "@/utils";
 import { StatStreakItem } from "../stat-streak-item";
 
 import { PomodoroEntityDay } from "../../store/types";

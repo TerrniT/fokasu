@@ -1,4 +1,4 @@
-import { cn } from "../../utils/cn";
+import { cn } from "@/utils";
 
 interface Props {
   title: string | number;
@@ -13,7 +13,7 @@ export const StatItem: React.FC<Props> = ({ variant, title, description, classNa
       className={cn(
         "flex flex-col col-span-2 row-span-1 rounded-xl p-2 items-baseline",
         variant === "primary"
-          ? "bg-orange-600 items-baseline text-[#1a1a1a] "
+          ? "bg-primary items-baseline text-[#1a1a1a] "
           : "bg-[#1a1a1a] text-white",
 		className
       )}>

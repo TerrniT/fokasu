@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { RiArrowGoBackFill as ResetIcon } from "react-icons/ri";
 import { HiOutlineCog6Tooth as SettingsCogIcon } from "react-icons/hi2";
@@ -12,32 +12,28 @@ import {
 
 import { TbCrown as CrownIcon } from "react-icons/tb";
 
-import { Timer } from "../components/timer";
-import { BlurAnimation } from "../components/blur-animation";
-import { Toolbar } from "../components/toolbar";
-import { PageLayout } from "../components/page-layout";
-import { Button } from "../components/button";
+import { Timer } from "@/components/timer";
+import { BlurAnimation } from "@/components/blur-animation";
+import { Toolbar } from "@/components/toolbar";
+import { PageLayout } from "@/components/page-layout";
+
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Typography } from "@/components/ui/typography";
+
 
 import { usePomodoroStore } from "../store";
 import Link from "next/link";
 
 function App() {
-  const [modal, setModal] = useState<boolean>(false);
-
-  //   const workDuration = 0.5 * 60; // 15 minutes
-  //   const breakDuration = 0.5 * 60  // 5 minutes
-  //   const cycles = 4;               // Number of cycles
-
-  //   const {
-  //     secondsLeft,
-  //     isTimerStart,
-  //     cycleCount,
-  //     isBreak,
-  //     percentageLeft,
-  //     setTimerStart,
-  //     onResetTimer,
-  //   } = usePomodoroStore({workDuration, breakDuration, cycles});
-
   const {
     workDuration,
     breakDuration,
@@ -87,26 +83,52 @@ function App() {
         />
       </Link>
       <Toolbar position="bottom">
-        <Button onClick={resetTimer}>
+        <Button onClick={resetTimer} variant="outline" size="icon">
           <ResetIcon
             size={18}
             className="transition-all duration-75 ease-linear group-hover:scale-105"
           />
         </Button>
-        <button
-          className="w-28 h-10 backdrop-blur-sm z-20 rounded-2xl text-2xl border text-white bg-zinc-600 border-zinc-700 hover:scale-105 flex items-center justify-center transition-all duration-150"
-          onClick={() => startTimer()}>
+        <Button className="text-2xl rounded-2xl w-28 h-10 hover:scale-105 transition-all duration-150" variant="default" onClick={() => startTimer()}>
           {!isTimerStart ? <PlayIcon /> : <PauseIcon />}
-        </button>
-        <Button onClick={() => setModal((prev) => !prev)}>
-          <SettingsCogIcon
-            size={22}
-            className="group-hover:scale-105 transition-all duration-75 ease-linear"
-          />
         </Button>
+        <Drawer snapPoints={["300px"]}>
+          <DrawerTrigger asChild>
+            <Button variant="outline" size="icon">
+              <SettingsCogIcon
+                size={22}
+                className="group-hover:scale-105 transition-all duration-75 ease-linear"
+              />
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <div className="mx-auto w-full max-w-sm">
+              <DrawerHeader>
+                <DrawerTitle>
+                  <Typography>Settings</Typography>
+                </DrawerTitle>
+              </DrawerHeader>
+              <div className="p-4 pb-0">
+                <div className="flex items-center justify-center space-x-2">
+                  Hello
+                </div>
+              </div>
+              <DrawerFooter className="flex items-end">
+                <DrawerClose asChild>
+                  <Button size="icon" variant="outline">
+                    <CloseIcon
+                      size={22}
+                      className="group-hover:scale-105 transition-all duration-75 ease-linear"
+                    />
+                  </Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </div>
+          </DrawerContent>
+        </Drawer>
       </Toolbar>
 
-      {modal ? (
+      {/* {modal ? (
         <div className="border border-zinc-800 bg-black/80 shadow-md duration-150 backdrop-blur-lg transition-all rounded-md z-30 absolute top-0 right-0 w-full h-full">
           <div className="w-full h-full relative ">
             <Toolbar position="top">
@@ -125,7 +147,7 @@ function App() {
             </Toolbar>
           </div>
         </div>
-      ) : null}
+      ) : null} */}
     </PageLayout>
   );
 }
