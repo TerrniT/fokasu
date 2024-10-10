@@ -4,12 +4,12 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { ask } from "@tauri-apps/api/dialog";
 
 import {
-  PomodoroEntityDay,
   PomodoroEntitySession,
   PomodoroMethods,
   PomodoroState,
 } from "./types";
-import { DEFAULT_POMODORO_DURATION, mockSessions } from "./constants";
+
+import { DEFAULT_POMODORO_DURATION } from "./constants";
 
 import { fillCalendarWithSessions, generateCalendar } from "@/utils";
 
@@ -103,8 +103,6 @@ const usePomodoroStore = create<PomodoroStore>()(
       completePomodoro: () => {
         set((state) => ({
           completedPomodoroCount: state.completedPomodoroCount + 1, // Increment total count
-          currentStreak: state.currentStreak + 1, // Increment current Pomodoro streak
-          bestStreak: Math.max(state.currentStreak + 1, state.bestStreak), // Update best Pomodoro streak
         }));
       },
 
@@ -136,16 +134,18 @@ const usePomodoroStore = create<PomodoroStore>()(
 
           return {
             completedSessions: [...state.completedSessions],
+			currentStreak: state.currentStreak + 1, // Increment current Pomodoro streak
+			bestStreak: Math.max(state.currentStreak + 1, state.bestStreak), // Update best Pomodoro streak
           };
         });
       },
 
       // Get monthly data with sessions filled
       getMonthlyData: (yearValue?: number, monthValue?: number) => {
-		const year = yearValue || new Date().getFullYear();
-		const month = monthValue || new Date().getMonth();
+        const year = yearValue || new Date().getFullYear();
+        const month = monthValue || new Date().getMonth();
 
-		const calendar = generateCalendar(year, month);
+        const calendar = generateCalendar(year, month);
 
         const filledCalendar = fillCalendarWithSessions(
           calendar,
@@ -154,72 +154,34 @@ const usePomodoroStore = create<PomodoroStore>()(
         return filledCalendar; // This will include empty days filling with actual sessions
       },
 
-      //   getAllCompletedPomodorosCount: () => {
-      //     const completedPomodoroDetails = get().completedSessionDetails;
-      //     return Object.values(completedPomodoroDetails).reduce(
-      //       (total, { pomodoros }) => total + pomodoros,
-      //       0
-      //     ); // Total Pomodoros completed across all sessions
-      //   },
+      getAllSessionsCount: () => {
+        return Object.values(get().completedSessions).flat().length; // Number of all completed sessions
+      },
 
-      //   getTodayPomodorosCount: () => {
-      //     const today = new Date().toISOString().split("T")[0];
-      //     const sessionDetails = get().completedSessionDetails[today];
-      //     return sessionDetails ? sessionDetails.pomodoros : 0; // Today's Pomodoros count
-      //   },
+      getBestSessionStreak: () => {
+        return get().bestSessionStreak;
+      },
 
-      //   getAllSessionsCount: () => {
-      //     return Object.values(get().completedSessionDetails).flat().length; // Number of all completed sessions
-      //   },
+      getCurrentPomodoroStreak: () => {
+        return get().currentStreak; // Current Pomodoro streak count
+      },
 
-      //   getAllSessions: () => {
-      //     const sessions = Object.values(get().completedSessionDetails).flat();
-      //     return sessions; // Returns an array of all completed session timestamps
-      //   },
+      getBestPomodoroStreak: () => {
+        return get().bestStreak; // Best Pomodoro streak count
+      },
 
-      //   getTodaySessionsCount: () => {
-      //     const today = new Date().toISOString().split("T")[0]; // Get today's date
-      //     return (get().completedSessionDetails[today] || []).length; // Today's sessions count
-      //   },
+      getAllCompletedPomodorosCount: () => {
+        const sessions = get().getMonthlyData();
 
-      //   getTodaySessions: () => {
-      //     const today = new Date().toISOString().split("T")[0]; // Get today's date
-      //     return get().completedSessionDetails[today] || []; // Returns today's completed session timestamps
-      //   },
-
-      //   getBestSessionStreak: () => {
-      // 	return get().bestSessionStreak;
-      //   },
-
-      //   getTodayPomodorosCount: () => {
-      // 	const todayPomodorosCount = get().completedPomodoroCount; // Count today's Pomodoros
-      // 	return todayPomodorosCount; // You can adjust this based on your logic details
-      //   },
-
-      //   getCurrentPomodoroStreak: () => {
-      //     return get().currentStreak; // Current Pomodoro streak count
-      //   },
-
-      //   getBestPomodoroStreak: () => {
-      //     return get().bestStreak; // Best Pomodoro streak count
-      //   },
-
-      //   getAllCompletedPomodorosCount: () => {
-      //     return get().completedPomodoroCount; // Total completed Pomodoros count
-      //   },
-
-      //   getAllDaysCount: () => {
-      // 	const sessions = get().completedSessionDetails;
-      // 	return Object.values(sessions).reduce((total, timestamps) => total + timestamps.length, 0)
-      //   }
+		return sessions
+		  .map((day) => day.sessions)
+		  .flat()
+		  .reduce((acc, session) => acc + session.pomodoros_count, 0);
+      },
     }),
     {
       name: "pomodoro-state",
       storage: createJSONStorage(() => localStorage),
-      onRehydrateStorage: () => (state) => {
-        state.completedSessions = mockSessions;
-        console.log("Storage rehydrated:", state.completedSessions);
-      },
     }
   )
 );

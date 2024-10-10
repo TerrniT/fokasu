@@ -18,7 +18,7 @@ export const StatItem: React.FC<Props> = ({ variant, title, description, classNa
 		className
       )}>
       <div className="flex gap-x-2 flex-col">
-        <h3 className="font-bold text-4xl">{title}</h3>
+        <h3 className="font-bold text-3xl">{title}</h3>
         <span
           className={cn(
 			"text-sm",

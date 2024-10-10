@@ -18,27 +18,12 @@ export interface PomodoroMethods {
   completePomodoro?: () => void;
   completeSession?: (name: string) => void; // Accept name for session completion
   getMonthlyData?: (year?: number, month?: number) => PomodoroEntityDay[];
-//   getAllSessions?: () => number[]; // All completed sessions
-//   getTodaySessions?: () => number[]; // Today's completed sessions
+  getAllSessionsCount?: () => number; // All completed session count
 
-//   getAllSessionsCount?: () => number; // All completed session count
-//   getBestSessionStreak?: () => number; // Best completed session streak
-//   getTodaySessionsCount?: () => number; // Today's sessions count
+  getCurrentPomodoroStreak?: () => number; // Current Pomodoro streak count
+  getBestPomodoroStreak?: () => number; // Best Pomodoro streak count
 
-//   getCurrentPomodoroStreak?: () => number; // Current Pomodoro streak count
-//   getBestPomodoroStreak?: () => number; // Best Pomodoro streak count
-
-//   getAllDaysCount?: () => number;
-
-//   getAllCompletedPomodorosCount?: () => number; // Total completed Pomodoros count
-//   getTodayPomodorosCount?: () => number; // Today's Pomodoros count
-
-//   getAllSessionsCount: () => number;
-//   getTodaySessionsCount: () => number;
-//   getCurrentPomodoroStreak: () => number;
-//   getBestPomodoroStreak: () => number;
-//   getAllCompletedPomodorosCount: () => number;
-//   getTodayPomodorosCount: () => number;
+  getAllCompletedPomodorosCount?: () => number; // Total completed Pomodoros count
 }
 
 export interface PomodoroState {

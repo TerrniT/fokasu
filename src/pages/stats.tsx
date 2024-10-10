@@ -11,24 +11,18 @@ import { StatStreakGrid } from "../components/stat-streak-grid";
 
 export default function StatsPage() {
   const {
-    // completedSessionTimestamps,
-    // completedSessions,
-	getMonthlyData
-
-    // getAllSessionsCount,
-    // getTodaySessionsCount,
-    // getBestSessionStreak,
-
-    // getTodayPomodorosCount,
-    // getCurrentPomodoroStreak,
-    // getBestPomodoroStreak,
-    // getAllCompletedPomodorosCount,
-
-    // getAllDaysCount
+    getMonthlyData,
+    getAllSessionsCount,
+    getCurrentPomodoroStreak,
+    getBestPomodoroStreak,
+    getAllCompletedPomodorosCount,
   } = usePomodoroStore();
 
-  const sessions =  getMonthlyData(2024, 9)
-  console.log(sessions, "completedSessions");
+  const sessions = getMonthlyData(2024, 9);
+  const allSessionsCount = getAllSessionsCount()
+  const currentPomodoroStreak = getCurrentPomodoroStreak()
+  const bestPomodoroStreak = getBestPomodoroStreak()
+  const completedPomodorosCount = getAllCompletedPomodorosCount()
   return (
     <PageLayout>
       <Toolbar position="top">
@@ -44,57 +38,33 @@ export default function StatsPage() {
           className="group-hover:scale-110 transition-all duration-75 ease-linear"
         />
       </Link>
-      <div className="w-full py-12">
-        <div className="grid gap-1 grid-cols-6 grid-rows-2">
-          {/* <StatItem
-            title={getAllDaysCount()}
-            description="Days"
+      <div className="w-full py-12 mt-2">
+        <div className="grid gap-1 grid-cols-12 grid-rows-2">
+          <StatItem
+            title={currentPomodoroStreak}
+            description="Days Streak"
             variant="primary"
-            className="col-span-3"
-          /> */}
-          {/* <StatItem
-            title={getAllSessionsCount()}
+            className="col-span-4"
+          />
+          <StatItem
+            title={allSessionsCount}
             description="All Sessions"
-            variant="primary"
-            className="col-span-3"
-          />
-          <StatItem
-            title={getBestSessionStreak()}
-            description="Session Streak"
-            variant="secondary"
-            className="col-span-3"
-          />
-          <StatItem
-            title={getTodaySessionsCount()}
-            description="Today"
-            variant="secondary"
-            className="col-span-2"
-          />
-          <StatItem
-            title={getCurrentPomodoroStreak()}
-            description="Current streak"
-            variant="secondary"
-            className=""
-          />
-          <StatItem
-            title={getBestPomodoroStreak()}
-            description="Best streak"
-            variant="secondary"
-            className=""
-          />
-          <StatItem
-            title={getTodayPomodorosCount()}
-            description="Today"
-            variant="secondary"
-            className="col-span-2"
-          />
-          <StatItem
-            title={getAllCompletedPomodorosCount()}
-            description="Pomodoros"
             variant="secondary"
             className="col-span-4"
-          /> */}
-          <StatStreakGrid streakArray={sessions} />
+          />
+          <StatItem
+            title={bestPomodoroStreak}
+            description="Best Streak"
+            variant="secondary"
+            className="col-span-4"
+          />
+          <StatStreakGrid streakArray={sessions} className="col-span-6" />
+          <StatItem
+            title={completedPomodorosCount}
+            description="Total Pomodoros"
+            variant="primary"
+            className="col-span-6"
+          />
         </div>
       </div>
     </PageLayout>
